@@ -2,6 +2,8 @@
 
 ## 一、[Issue #3793](https://github.com/ray-project/kuberay/issues/3793)
 
+<img width="1271" height="659" alt="issue #3793" src="https://github.com/user-attachments/assets/c1fcde9c-3cb8-47fd-85ae-a1d95176b611" />
+
 ### 使用者遇到的實際場景
 
 > 在 Kubernetes 上用 **containerd + NVIDIA GPU runtime**（例如 k3s 或 RKE）部署 KubeRay 集群
@@ -65,6 +67,8 @@ kubectl patch raycluster <name> --type=json -p='[{"op":"add","path":"/spec/worke
 
 ## 三、PR #4184 是怎麼修正的？
 
+<img width="1262" height="767" alt="PR #4184" src="https://github.com/user-attachments/assets/d58afda2-4794-4576-a833-bd5fef436566" />
+
 ### 改動內容
 
 #### 1. **更新 Helm values.yaml**
@@ -112,6 +116,8 @@ runtimeClassName: {{ .Values.head.template.spec.runtimeClassName }}
 Helm 需要 values.yaml 來提供 helm show values 命令的輸出，在 CI/CD 中做 schema validation（如果搭配 values.schema.json），讓使用者只需寫「差異部分」（例如只改 runtimeClassName，其他用預設）
 
 ### 3. 在 issue 中有提到一個問題，`「我打算修改 kuberay repo 裡的 Helm chart（即 helm-chart/ray-cluster/...），但我注意到還有一個獨立的 repo 叫 kuberay-helm，所以我不確定該改哪邊？」`
+
+<img width="863" height="214" alt="截圖 2026-01-14 上午11 53 56" src="https://github.com/user-attachments/assets/a8b5dc76-17c6-45ef-9336-ea80c675c358" />
 
 KubeRay 專案原本把 Helm chart 放在主 repo 的 helm-chart/ 目錄下，後來為了方便 Helm Hub 發佈、版本管理，也同步維護了一個獨立的 Helm repo：ray-project/kuberay-helm，這兩個 repo 的內容應該保持同步，通常透過自動化腳本（如 scripts/sync-helm-chart.sh）從主 repo 同步到 kuberay-helm
 
