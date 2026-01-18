@@ -1,0 +1,53 @@
+groups:
+  - name: test-alerts
+    rules:
+      # 1. 永遠觸發（你原本的）
+      - alert: AlwaysFiringTestAlert
+        expr: vector(1)
+        for: 0s
+        labels:
+          severity: info
+        annotations:
+          summary: "Test alert - always firing"
+          description: "This is a test alert to verify your Alertmanager + Webhook setup."
+
+      # 2. 永遠不會觸發（驗證 silence / inactive 狀態）
+      - alert: NeverFiringTestAlert
+        expr: vector(0)
+        for: 0s
+        labels:
+          severity: info
+        annotations:
+          summary: "Test alert - never firing"
+          description: "This alert should never fire."
+      # 4. 模擬 warning 等級（for 行為測試）
+      - alert: DelayedWarningTestAlert
+        expr: vector(1)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Test alert - delayed warning"
+          description: "This alert fires after being active for 2 minutes."
+
+      # 5. 模擬 critical 等級
+      - alert: CriticalTestAlert
+        expr: vector(1)
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Test alert - critical"
+          description: "This is a critical severity test alert."
+
+      # 6. 模擬 instance / job label（測 routing）
+      - alert: LabeledInstanceTestAlert
+        expr: vector(1)
+        for: 0s
+        labels:
+          severity: info
+          job: test-job
+          instance: test-instance-1
+        annotations:
+          summary: "Test alert with labels"
+          description: "Used to verify Alertmanager routing by job/instance."
